@@ -4,8 +4,8 @@
 
 @include('master.navbar2')
 
-<div x-data="{ open: false, showDetail: false, detailData: {} }" class="container mx-auto px-4 py-6 mb-9">
-    <div class="flex justify-between items-center mb-4">
+<div x-data="{ open: false, showDetail: false, detailData: {} }" class="container mx-auto px-4 py-10 mb-9 h-screen max-w-6xl">
+    <div class="flex justify-between items-center mb-6">
         <form action="{{ route('cabang.hasilpanen') }}" method="GET" class="relative w-1/3">
             <input
                 type="text"
@@ -28,7 +28,7 @@
     <div class="bg-white border rounded-xl p-4">
         <div class="overflow-x-auto">
             <h3 class="text-xl font-semibold mb-4">Riwayat Hasil Panen</h3>
-            <table class="min-w-full text-sm text-left">
+            <table class="min-w-full text-sm text-left border border-gray-200">
                 <thead>
                     <tr class="border-b">
                         <th class="py-2 px-4">No.</th>

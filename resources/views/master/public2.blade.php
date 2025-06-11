@@ -12,17 +12,28 @@
     <script>
         tailwind.config = {
             theme: {
-                fontFamily {
-                    Poppins: ["Poppins", "sans-serif"]
+                extend: {
+                    fontFamily: {
+                        Poppins: ["Poppins", "sans-serif"]
+                    },
+                    backdropBlur: {
+                        xs: '2px',
+                    }
                 }
             }
         }
     </script>
-    <title>LahanTani | @yield('title')</title>
+    <title>Melontrack | @yield('title')</title>
 </head>
-<body class="relative h-screen bg-cover bg-center" style="background-image: url('asset/plantmelon.jpg');">
+<body class="font-Poppins relative min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style="background-image: url('asset/plantmelon.jpg');">
 
-    @yield('content')
+    <!-- Dark overlay -->
+    <div class="absolute inset-0 bg-black/50"></div>
+
+    <!-- Main content with glass effect container -->
+    <main class="relative z-10 flex items-center justify-center min-h-screen p-4">
+        @yield('content')
+    </main>
 
 </body>
 </html>

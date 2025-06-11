@@ -4,7 +4,7 @@
 
     @include('master.navbar')
 
-    <div class="container mx-auto px-4 py-6 mb-6">
+    <div class="container mx-auto h-screen px-4 py-6">
         <div x-data="{ showModal: {{ request('showModal') === 'true' ? 'true' : 'false' }} }">
 
         <div class="flex justify-between items-center mb-6">

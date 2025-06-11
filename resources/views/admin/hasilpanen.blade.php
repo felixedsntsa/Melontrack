@@ -4,7 +4,7 @@
 
 @include('master.navbar')
 
-<div x-data="panenDetail()" class="container mx-auto px-4 py-6">
+<div x-data="panenDetail()" class="container max-w-6xl h-screen mx-auto px-4 py-10">
 
     <h2 class="text-2xl font-bold mb-2">Hasil Panen</h2>
     <div class="bg-white shadow rounded-lg p-6 mb-16">
@@ -122,11 +122,11 @@
                     </div>
 
                     <!-- Tombol Cetak PDF -->
-                    {{-- <div class="text-right mt-6">
+                    <div class="text-right mt-6">
                         <button @click="printPDF()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl text-sm shadow">
                             Cetak PDF
                         </button>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         </div>
@@ -172,7 +172,7 @@
                             <div style="text-align: right;">
                                 <!-- Replace with your actual logo or company name -->
                                 <div style="background-color: #2c7be5; color: white; padding: 10px 15px; border-radius: 4px; font-weight: bold; display: inline-block;">
-                                    ${this.detailData.cabang?.nama || 'Lahan Tani'}
+                                    ${this.detailData.cabang?.nama || 'Melontrack'}
                                 </div>
                             </div>
                         </div>
@@ -181,7 +181,7 @@
                         <div style="display: flex; justify-content: space-between; margin-bottom: 30px; gap: 15px;">
                             <div style="flex: 1; background: #f8f9fa; border-radius: 8px; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                                 <div style="color: #6e84a3; font-size: 14px; margin-bottom: 5px;">Periode Panen</div>
-                                <div style="font-size: 24px; font-weight: 600; color: #2c7be5;">${this.detailData.periode_panen} Hari</div>
+                                <div style="font-size: 24px; font-weight: 600; color: #2c7be5;">${this.detailData.periode_panen}</div>
                             </div>
                             <div style="flex: 1; background: #f8f9fa; border-radius: 8px; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                                 <div style="color: #6e84a3; font-size: 14px; margin-bottom: 5px;">Total Panen</div>
@@ -232,7 +232,7 @@
                         <!-- Footer -->
                         <div style="margin-top: 40px; padding-top: 15px; border-top: 1px solid #edf2f9; text-align: center; color: #95aac9; font-size: 12px;">
                             <p>Dokumen ini dicetak secara otomatis pada ${new Date().toLocaleString()}</p>
-                            <p>© ${new Date().getFullYear()} Lahan Tani. All rights reserved.</p>
+                            <p>© ${new Date().getFullYear()} Melontrack. All rights reserved.</p>
                         </div>
                     </div>
                 `;

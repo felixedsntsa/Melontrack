@@ -6,7 +6,7 @@
 
 @php use Illuminate\Support\Str; @endphp
 
-<div class="max-w-6xl mx-auto py-10 px-4">
+<div class="max-w-6xl h-screen mx-auto py-10 px-4">
 
     <div class="mb-6 flex justify-between items-center">
         <form action="{{ route('cabang.laporan') }}" method="GET" class="relative w-1/3">
@@ -33,7 +33,7 @@
     <div class="bg-white shadow rounded-lg p-6 border">
         <h3 class="text-xl font-semibold mb-4">Riwayat Laporan</h3>
         <div class="overflow-x-auto">
-            <table class="min-w-full text-sm text-left">
+            <table class="min-w-full text-sm text-left border border-gray-200">
                 <thead class="text-gray-700 font-semibold border-b">
                     <tr>
                         <th class="py-2 px-4">No.</th>
@@ -61,7 +61,7 @@
                             <td class="py-2 px-4">{{ Str::limit($laporan->feedback ?? '-', 20) }}</td>
                             <td class="py-2 px-4">
                                 <a href="{{ route('cabang.laporan.show', $laporan->id) }}"
-                                    class="bg-green-600 text-white px-3 py-1.5 rounded-full text-sm hover:bg-green-700">
+                                    class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-green-700">
                                     Selengkapnya
                                 </a>
                             </td>

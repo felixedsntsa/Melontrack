@@ -47,7 +47,7 @@ class C_Laporan extends Controller
         $paths = [];
         if ($request->hasFile('dokumentasi')) {
             foreach ($request->file('dokumentasi') as $file) {
-                $paths[] = $file->store('dokumentasi', 'public');
+                $paths[] = $file->store('laporan-foto', 'public');
             }
         }
 

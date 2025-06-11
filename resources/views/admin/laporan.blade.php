@@ -4,7 +4,7 @@
 
 @include('master.navbar')
 
-<div class="container mx-auto px-4 py-6">
+<div class="container h-screen mx-auto px-4 py-10 max-w-6xl">
     <h2 class="text-2xl font-bold mb-4">Laporan Pemantauan</h2>
 
     <div class="bg-white shadow rounded-lg p-6 mb-16">
@@ -28,7 +28,7 @@
             </form>
         </div>
 
-        <table class="min-w-full text-sm text-left">
+        <table class="min-w-full text-sm text-left border border-gray-200">
             <thead class="bg-gray-100 text-gray-700 font-semibold">
                 <tr>
                     <th class="py-2 px-4">No</th>

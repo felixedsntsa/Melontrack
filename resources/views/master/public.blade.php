@@ -18,7 +18,7 @@
             }
         }
     </script>
-    <title>LahanTani | @yield('title')</title>
+    <title>Melontrack | @yield('title')</title>
     <style>
             .outline-text {
             -webkit-text-stroke: 2px whitesmoke;

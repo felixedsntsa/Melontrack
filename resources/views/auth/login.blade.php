@@ -2,72 +2,115 @@
 @section('title', 'Login')
 @section('content')
 
-<div class="absolute inset-0 bg-black/60"></div></div>
-        <div class="relative z-10 flex items-center justify-center h-full">
-        <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md ">
-        <div class="flex items-center justify-center">
-            <img src="asset/melonrepo.svg" alt="" class="w-20 mb-5">
+<div class="w-full max-w-md backdrop-blur-md bg-white/20 rounded-2xl shadow-xl overflow-hidden border border-white/20">
+    <!-- Glass effect container -->
+    <div class="p-8 space-y-6">
+        <!-- Logo and Header -->
+        <div class="text-center">
+            <img src="asset/melonfavicon.png" alt="MelonTrack Logo" class="mx-auto h-16 w-auto">
+            <h1 class="mt-4 text-3xl font-bold text-white">Selamat Datang</h1>
+            <p class="mt-2 text-sm font-medium text-white/90">Silakan masuk ke akun Anda untuk melanjutkan</p>
         </div>
-        <h1 class="text-3xl font-extrabold text-center text-green-600 mb-8">Melontrack</h1>
 
-            @if ($errors->any())
-                <div class="mb-4 w-full max-w-md bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                    <strong class="font-bold">Terjadi kesalahan:</strong>
-                    <ul class="mt-2 list-disc list-inside text-sm">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            @if (session('error'))
-                <div class="flex justify-center"> <!-- Parent container untuk mengatur posisi horizontal -->
-                    <div class="flex items-center gap-3 border border-red-500 bg-gray-100 text-red-700 px-4 py-2 rounded-full mb-4 w-fit">
-                        <!-- Icon lingkaran dengan X -->
-                        <div class="w-5 h-5 border border-red-500 rounded-full flex items-center justify-center text-sm font-bold">
-                            &times;
+        <!-- Error Messages -->
+        @if ($errors->any())
+            <div class="rounded-lg bg-red-400/20 backdrop-blur-xs p-4 border border-red-400/30">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-red-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-white">There were {{ $errors->count() }} errors</h3>
+                        <div class="mt-2 text-sm text-red-100">
+                            <ul class="list-disc pl-5 space-y-1">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
-                        <span class="text-sm font-medium">Email/Password tidak valid</span>
                     </div>
                 </div>
-            @endif
+            </div>
+        @endif
 
+        @if (session('error'))
+            <div class="rounded-lg bg-red-400/20 backdrop-blur-xs p-4 border border-red-400/30">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-red-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-white">Login gagal</h3>
+                        <div class="mt-2 text-sm text-red-100">
+                            <p>Email/Password tidak valid. Silakan coba lagi.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
 
-        <form method="POST" action="{{ route('login.proses') }}">
+        <!-- Login Form -->
+        <form class="mt-6 space-y-4" method="POST" action="{{ route('login.proses') }}">
             @csrf
-            <!-- Email Input -->
-            <div class="mb-6">
-                <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Masukkan Email"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                    required
-                >
+            <div class="space-y-4">
+                <!-- Email Field -->
+                <div>
+                    <label for="email" class="block text-sm font-medium text-white">Email address</label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-black/70" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                            </svg>
+                        </div>
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            autocomplete="email"
+                            required
+                            placeholder="you@example.com"
+                            class="py-3 pl-10 block w-full bg-white/20 border border-white/30 rounded-md text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-green-300 focus:border-transparent"
+                        >
+                    </div>
+                </div>
+
+                <!-- Password Field -->
+                <div>
+                    <label for="password" class="block text-sm font-medium text-white">Password</label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-black/70" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            autocomplete="current-password"
+                            required
+                            placeholder="••••••••"
+                            class="py-3 pl-10 block w-full bg-white/20 border border-white/30 rounded-md text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-green-300 focus:border-transparent"
+                        >
+                    </div>
+                </div>
             </div>
 
-            <!-- Password Input -->
-            <div class="mb-6">
-                <label for="password" class="block text-gray-700 font-bold mb-2">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Masukkan Password"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                    required
+            <div>
+                <button
+                    type="submit"
+                    class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-300 transition duration-150 ease-in-out"
                 >
+                    Masuk
+                </button>
             </div>
-
-            <!-- Submit Button -->
-            <button
-                type="submit"
-                class="w-full bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                Masuk
-            </button>
         </form>
     </div>
+</div>
 
 @endsection
