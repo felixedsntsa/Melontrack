@@ -122,11 +122,11 @@
                     </div>
 
                     <!-- Tombol Cetak PDF -->
-                    <div class="text-right mt-6">
+                    {{-- <div class="text-right mt-6">
                         <button @click="printPDF()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl text-sm shadow">
                             Cetak PDF
                         </button>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

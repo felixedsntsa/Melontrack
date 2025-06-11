@@ -219,7 +219,7 @@
 
                 <div class="lg:w-1/2" data-aos="fade-left">
                     <div class="relative">
-                        <img src="/asset/farmer_man.png" alt="Petani Melon" class="rounded-xl shadow-2xl border-8 border-white w-full max-w-lg mx-auto bg-white/30">
+                        <img src="/asset/farmer_man.png" alt="Petani Melon" class="rounded-xl shadow-2xl border-8 border-white/20 w-full max-w-lg mx-auto">
                         <div class="absolute -bottom-6 -left-1 w-32 h-32 bg-yellow-200/10 rounded-full"></div>
                         <div class="absolute -top-6 -right-1 w-24 h-24 bg-white/10 rounded-full"></div>
                     </div>
