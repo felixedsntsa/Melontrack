@@ -40,7 +40,7 @@
             <div class="flex items-center">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <img src="/asset/melonfavicon.png" alt="Melontrack Logo" class="h-10 w-auto">
+                    <img src="/asset/icon_melon.png" alt="Melontrack Logo" class="h-10 w-auto">
                     <span class="ml-3 text-2xl font-bold text-green-700 hidden sm:block"><a href="{{ url('/cabang/dashboard') }}">Melon<span class="text-green-600">track</span></a></span>
                 </div>
 

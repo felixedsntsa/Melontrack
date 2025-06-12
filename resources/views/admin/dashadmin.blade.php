@@ -135,7 +135,7 @@
                             </div>
                             <h3 class="text-xl font-bold text-gray-800">Analisis Keuangan</h3>
                         </div>
-                        <p class="text-gray-600 mb-6 leading-relaxed">Visualisasi pendapatan dan analisis profitabilitas usaha budidaya dengan breakdown per komponen.</p>
+                        <p class="text-gray-600 mb-6 leading-relaxed">Visualisasi pendapatan dan analisis profitabilitas usaha budidaya menggunakan grafik yang sesuai dengan apa yang anda inputkan.</p>
                         <div class="flex justify-between items-center">
                             <a href="{{ route('admin.hasilpenjualan.index') }}" class="text-blue-600 font-medium hover:text-blue-700 transition-colors flex items-center">
                                 Lihat Detail

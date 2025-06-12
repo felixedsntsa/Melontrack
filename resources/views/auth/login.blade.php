@@ -7,7 +7,7 @@
     <div class="p-8 space-y-6">
         <!-- Logo and Header -->
         <div class="text-center">
-            <img src="asset/melonfavicon.png" alt="MelonTrack Logo" class="mx-auto h-16 w-auto">
+            <img src="asset/icon_melon.png" alt="MelonTrack Logo" class="mx-auto h-16 w-auto">
             <h1 class="mt-4 text-3xl font-bold text-white">Selamat Datang</h1>
             <p class="mt-2 text-sm font-medium text-white/90">Silakan masuk ke akun Anda untuk melanjutkan</p>
         </div>

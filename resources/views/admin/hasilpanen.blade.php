@@ -4,137 +4,191 @@
 
 @include('master.navbar')
 
-<div x-data="panenDetail()" class="container max-w-6xl h-screen mx-auto px-4 py-10">
+<div x-data="panenDetail()" class="min-h-screen bg-gradient-to-br from-gray-50 to-green-50 py-8">
+    <div class="container max-w-6xl mx-auto px-4">
+        <div class="bg-white/90 backdrop-blur-sm shadow-xl rounded-xl p-6 mb-16 border border-gray-100">
+            <!-- Header Section -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Hasil Panen</h2>
+                    <p class="text-gray-600">Rekap data hasil panen seluruh cabang</p>
+                </div>
 
-    <h2 class="text-2xl font-bold mb-2">Hasil Panen</h2>
-    <div class="bg-white shadow rounded-lg p-6 mb-16">
-        <div class="overflow-x-auto">
-            <div class="flex justify-between items-center mb-4 mt-3 ml-3">
-            <form method="GET" action="{{ route('admin.hasilpanen') }}" class="w-full max-w-sm">
-                <div class="relative">
-                    <input
-                        type="text"
-                        name="search"
-                        placeholder="Cari hasil panen..."
-                        value="{{ request('search') }}"
-                        class="w-full border border-gray-300 rounded-full py-2 px-4 pl-10 focus:outline-none focus:ring-1 focus:ring-green-300
-"
-                    />
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+                <!-- Search Form -->
+                <form method="GET" action="{{ route('admin.hasilpanen') }}" class="w-full md:w-96">
+                    <div class="relative">
+                        <input
+                            type="text"
+                            name="search"
+                            placeholder="Cari hasil panen..."
+                            value="{{ request('search') }}"
+                            class="w-full border border-gray-200 rounded-full py-2 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm transition-all duration-200"
+                        />
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+                            </svg>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Main Card -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100">
+                <!-- Table Section -->
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm">
+                        <thead class="bg-gradient-to-r from-green-600 to-green-700 text-white">
+                            <tr>
+                                <th class="py-3 px-4 text-left font-medium">No</th>
+                                <th class="py-3 px-4 text-left font-medium">Tanggal</th>
+                                <th class="py-3 px-4 text-left font-medium">Nama Cabang</th>
+                                <th class="py-3 px-4 text-left font-medium">Periode</th>
+                                <th class="py-3 px-4 text-left font-medium">Total Panen</th>
+                                <th class="py-3 px-4 text-left font-medium">Keterangan</th>
+                                <th class="py-3 px-4 text-center font-medium">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            @forelse ($hasilPanens as $index => $panen)
+                                <tr class="hover:bg-gray-50 transition-colors cursor-pointer" @click="showDetail({{ $panen->toJson() }})">
+                                    <td class="py-3 px-4">{{ ($hasilPanens->currentPage() - 1) * $hasilPanens->perPage() + $loop->iteration }}</td>
+                                    <td class="py-3 px-4">{{ \Carbon\Carbon::parse($panen->created_at)->format('d-m-Y') }}</td>
+                                    <td class="py-3 px-4 font-medium text-gray-800">{{ $panen->cabang->nama }}</td>
+                                    <td class="py-3 px-4">{{ $panen->periode_panen }}</td>
+                                    <td class="py-3 px-4 font-semibold text-green-700">{{ $panen->total_panen }} kg</td>
+                                    <td class="py-3 px-4 text-gray-600">
+                                        {{ \Illuminate\Support\Str::limit($panen->keterangan, 50, '...') }}
+                                    </td>
+                                    <td class="py-3 px-4 text-center">
+                                        <button @click.stop="showDetail({{ $panen->toJson() }})"
+                                            class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm shadow-md hover:shadow-lg transition-all duration-200"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            </svg>
+                                            Detail
+                                        </button>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="py-8 text-center text-gray-500">
+                                        <div class="flex flex-col items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            <p class="mt-2 text-lg">Belum ada data hasil panen</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="px-2 mt-6 border-t border-gray-100">
+                    {{ $hasilPanens->links() }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div x-show="isDetailVisible" x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div x-show="isDetailVisible" x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-95" @click.away="isDetailVisible = false"
+             class="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="sticky top-0 bg-gradient-to-r from-green-600 to-green-700 px-6 py-4 flex justify-between items-center z-10">
+                <h3 class="text-xl font-semibold text-white">Detail Hasil Panen</h3>
+                <button @click="isDetailVisible = false" class="text-white hover:text-gray-200 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- Cabang Info -->
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                </svg>
+                            </div>
+                            <h4 class="font-semibold text-gray-800">Informasi Cabang</h4>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Nama Cabang</span>
+                                <span class="font-medium" x-text="detailData.cabang?.nama"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Tanggal Laporan</span>
+                                <span class="font-medium" x-text="formatDate(detailData.created_at)"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panen Info -->
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                </svg>
+                            </div>
+                            <h4 class="font-semibold text-gray-800">Data Panen</h4>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Periode Panen</span>
+                                <span class="font-medium" x-text="detailData.periode_panen"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Total Panen</span>
+                                <span class="font-semibold text-green-700" x-text="detailData.total_panen + ' Kg'"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Keterangan -->
+                <div class="mb-6">
+                    <label class="block font-semibold text-gray-700 mb-2">Keterangan</label>
+                    <div class="bg-gray-50 border-l-4 border-green-500 rounded-r-lg p-4 text-gray-700">
+                        <div class="prose max-w-none" x-text="detailData.keterangan"></div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+                    <button @click="isDetailVisible = false" class="px-5 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200">
+                        Tutup
+                    </button>
+                    <button @click="printPDF()" class="px-5 py-2 bg-gradient-to-r from-green-600 to-green-700 text-white font-medium rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-200 shadow-md hover:shadow-lg flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                         </svg>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-            <table class="min-w-full text-sm text-left border border-gray-200">
-                <thead class="bg-gray-100 text-gray-700 font-semibold">
-                    <tr>
-                        <th class="py-2 px-4 border-b">No</th>
-                        <th class="py-2 px-4 border-b">Tanggal</th>
-                        <th class="py-2 px-4 border-b">Nama Cabang</th>
-                        <th class="py-2 px-4 border-b">Periode Panen</th>
-                        <th class="py-2 px-4 border-b">Total Panen</th>
-                        <th class="py-2 px-4 border-b">Keterangan</th>
-                        <th class="py-2 px-4 border-b"></th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y">
-                    @forelse ($hasilPanens as $index => $panen)
-                        <tr @click="showDetail({{ $panen->toJson() }})">
-                            <td class="py-2 px-4">{{ $index + 1 }}</td>
-                            <td class="py-2 px-4">{{ \Carbon\Carbon::parse($panen->created_at)->format('d-m-Y') }}</td>
-                            <td class="py-2 px-4">{{ $panen->cabang->nama }}</td>
-                            <td class="py-2 px-4">{{ $panen->periode_panen }}</td>
-                            <td class="py-2 px-4">{{ $panen->total_panen }} kg</td>
-                            <td class="py-2 px-4">
-                                <div class="flex items-center justify-between">
-                                    <span>{{ \Illuminate\Support\Str::limit($panen->keterangan, 50, '...') }}</span>
-                                    <button
-                                        @click.stop="showDetail({{ $panen->toJson() }})"
-                                        class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 text-sm"
-                                    >
-                                        Selengkapnya
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" class="py-4 text-center text-gray-500">Belum ada data hasil panen</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-            <div class="mt-4">
-                {{ $hasilPanens->links() }}
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Detail Card -->
-    <div x-show="isDetailVisible" class="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-        <div class="bg-white rounded-2xl shadow-lg w-full max-w-lg mx-auto px-8 py-6 relative" @click.away="isDetailVisible = false">
-            <!-- Tombol Close -->
-            <button @click="isDetailVisible = false" class="absolute top-3 right-4 text-2xl text-gray-600 hover:text-black">&times;</button>
-
-            <!-- Preview Content Modal -->
-            <div class="mb-4">
-                <h2 class="text-xl font-semibold mb-6 text-black">Detail Hasil Panen</h2>
-
-                <div class="space-y-4">
-                    <!-- Nama Cabang -->
-                    <div class="flex items-start">
-                        <label class="w-1/3 font-medium text-black mt-2">Nama Cabang</label>
-                        <input type="text" class="w-2/3 border border-gray-300 rounded-xl px-4 py-2 bg-gray-100"
-                            x-bind:value="detailData.cabang?.nama" readonly>
-                    </div>
-
-                    <!-- Tanggal -->
-                    <div class="flex items-start">
-                        <label class="w-1/3 font-medium text-black mt-2">Tanggal</label>
-                        <input type="text" class="w-2/3 border border-gray-300 rounded-xl px-4 py-2 bg-gray-100"
-                            :value="formatDate(detailData.created_at)" readonly>
-                    </div>
-
-                    <!-- Periode Panen -->
-                    <div class="flex items-start">
-                        <label class="w-1/3 font-medium text-black mt-2">Periode panen</label>
-                        <input type="text" class="w-2/3 border border-gray-300 rounded-xl px-4 py-2 bg-gray-100"
-                            x-bind:value="detailData.periode_panen" readonly>
-                    </div>
-
-                    <!-- Total Panen -->
-                    <div class="flex items-start">
-                        <label class="w-1/3 font-medium text-black mt-2">Total panen</label>
-                        <input type="text" class="w-2/3 border border-gray-300 rounded-xl px-4 py-2 bg-gray-100"
-                            x-bind:value="detailData.total_panen + ' Kg'" readonly>
-                    </div>
-
-                    <!-- Keterangan -->
-                    <div class="flex items-start">
-                        <label class="w-1/3 font-medium text-black mt-2">Keterangan</label>
-                        <textarea rows="5" class="w-2/3 border border-gray-300 rounded-xl px-4 py-2 bg-gray-100 text-sm text-black text-justify resize-none"
-                            x-text="detailData.keterangan" readonly></textarea>
-                    </div>
-
-                    <!-- Tombol Cetak PDF -->
-                    {{-- <div class="text-right mt-6">
-                        <button @click="printPDF()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl text-sm shadow">
-                            Cetak PDF
-                        </button>
-                    </div> --}}
+                        Cetak PDF
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <div id="print-area" style="display: none;"></div>
-
 </div>
 
 @include('master.footer')
@@ -157,7 +211,7 @@
                 const day = String(d.getDate()).padStart(2, '0');
                 const month = String(d.getMonth() + 1).padStart(2, '0');
                 const year = d.getFullYear();
-                return `${day} - ${month} - ${year}`;
+                return `${day}-${month}-${year}`;
             },
 
             printPDF() {
