@@ -49,7 +49,7 @@
             <!-- Image Content -->
             <div class="relative order-1 md:order-2" data-aos="fade-left">
                 <div class="relative z-10 w-full max-w-xl rounded-2xl shadow-2xl border-8 border-white transform rotate-1 hover:rotate-0 transition-all duration-500 overflow-hidden">
-                    <img src="/asset/bglaptop.png" alt="Dashboard Preview" class="w-full h-auto">
+                    <img src="/asset/hero-melon.jpg" alt="Dashboard Preview" class="w-full h-auto">
                     <!-- Overlay effect -->
                     <div class="absolute inset-0 bg-gradient-to-t from-green-900/10 to-transparent"></div>
                 </div>
