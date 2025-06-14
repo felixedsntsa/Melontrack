@@ -36,12 +36,12 @@ Route::post('/login', [C_Login::class, 'proses'])->name('login.proses');
 // DASHBOARD ADMIN
 Route::get('/admin/dashboard', function () {
     return view('admin.dashadmin');
-})->middleware('auth');
+})->middleware('auth')->name('admin.dashboard');
 
 // DASHBOARD CABANG
 Route::get('/cabang/dashboard', function () {
     return view('cabang.dashcabang');
-})->middleware('auth:cabang');
+})->middleware('auth:cabang')->name('cabang.dashboard');
 
 // LOGOUT
 Route::post('/logout', [C_Login::class, 'logout'])->name('logout');

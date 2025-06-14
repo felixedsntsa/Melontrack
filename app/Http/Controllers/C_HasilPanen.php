@@ -10,7 +10,7 @@ class C_HasilPanen extends Controller
     public function index(Request $request)
     {
         if (auth('cabang')->user()->status != 1) {
-            return redirect()->route('cabang.profil')->with('message', 'Akun Anda belum aktif. Silakan aktifkan terlebih dahulu di halaman profil.');
+            return redirect()->route('cabang.profil')->with('error', 'Akun Anda belum aktif. Silakan aktifkan terlebih dahulu di halaman profil.');
         }
 
         $query = HasilPanen::with('cabang')->where('cabang_id', auth('cabang')->id());
