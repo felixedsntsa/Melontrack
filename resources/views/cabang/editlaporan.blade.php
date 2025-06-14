@@ -58,38 +58,55 @@
 
                 <div class="p-6">
                     <div class="mb-6">
+                        <!-- Current Documentation -->
                         <label class="block text-sm font-medium text-gray-700 mb-2">Dokumentasi Saat Ini</label>
-                        <div class="flex flex-wrap gap-3 mb-4">
-                            @forelse ($laporan->dokumentasi as $doc)
+                        <div class="flex flex-wrap gap-3 mb-6">
+                            @forelse ($laporan->dokumentasi as $index => $doc)
                                 <div class="relative group">
-                                    <img src="{{ asset('storage/' . $doc) }}" class="w-24 h-24 object-cover rounded-lg border border-gray-200">
-                                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 rounded-lg transition duration-150 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                        <a href="{{ asset('storage/' . $doc) }}" target="_blank" class="bg-white bg-opacity-80 rounded-full p-1 text-green-600 hover:text-green-700">
+                                    <img src="{{ asset('storage/' . $doc) }}" class="w-24 h-24 object-cover rounded-lg border border-gray-200 shadow-sm">
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 rounded-lg transition duration-150 flex items-center justify-center opacity-0 group-hover:opacity-100 space-x-2">
+                                        <a href="{{ asset('storage/' . $doc) }}" target="_blank"
+                                        class="bg-white bg-opacity-80 rounded-full p-2 text-green-600 hover:text-green-700 transition duration-150">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
                                             </svg>
                                         </a>
+                                        <button type="button" onclick="confirmDeleteDocument('{{ $index }}')"
+                                                class="bg-white bg-opacity-80 rounded-full p-2 text-red-600 hover:text-red-700 transition duration-150">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                            </svg>
+                                        </button>
                                     </div>
                                 </div>
                             @empty
-                                <p class="text-gray-500 text-sm">Belum ada dokumentasi</p>
+                                <div class="w-full py-4 text-center text-gray-400">
+                                    <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <p>Belum ada dokumentasi</p>
+                                </div>
                             @endforelse
                         </div>
 
+                        <!-- New Documentation Upload -->
                         <label for="dokumentasi" class="block text-sm font-medium text-gray-700 mb-2">Tambah Dokumentasi Baru</label>
-                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
-                            <div class="space-y-1 text-center">
-                                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        <div id="drop-area" class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer bg-gray-50 hover:bg-gray-100 transition duration-150">
+                            <div id="file-preview" class="flex flex-wrap gap-3 mb-4"></div>
+
+                            <div id="upload-prompt" class="text-gray-500">
+                                <svg class="mx-auto h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
                                 </svg>
-                                <div class="flex text-sm text-gray-600">
-                                    <label for="dokumentasi" class="relative cursor-pointer bg-white rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none">
-                                        <span>Upload file</span>
-                                        <input id="dokumentasi" name="dokumentasi[]" type="file" multiple class="sr-only">
-                                    </label>
-                                    <p class="pl-1">atau drag and drop</p>
-                                </div>
-                                <p class="text-xs text-gray-500">PNG, JPG, JPEG up to 10MB</p>
+                                <p class="mt-2 text-sm font-medium">Seret file ke sini atau klik untuk memilih</p>
+                                <p class="mt-1 text-xs text-gray-400">Format: JPG, PNG, JPEG (maks. 10MB per file)</p>
+                                <label class="inline-flex items-center mt-3 text-green-600 hover:text-green-700 cursor-pointer transition duration-150">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M4 3a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V7.414A2 2 0 0017.414 6L14 2.586A2 2 0 0012.586 2H4z"/>
+                                    </svg>
+                                    <span class="text-sm underline">Pilih File</span>
+                                    <input type="file" name="dokumentasi[]" id="dokumentasi" multiple class="hidden" accept="image/*">
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -140,5 +157,146 @@
 </div>
 
 @include('master.footer2')
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('dokumentasi');
+        const previewContainer = document.getElementById('file-preview');
+        const uploadPrompt = document.getElementById('upload-prompt');
+        let files = [];
+
+        // Click to select files
+        dropArea.addEventListener('click', () => fileInput.click());
+
+        // File selection handler
+        fileInput.addEventListener('change', function(e) {
+            handleFiles(e.target.files);
+        });
+
+        // Drag and drop handlers
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+            dropArea.classList.add('border-green-500', 'bg-green-50');
+        }
+
+        function unhighlight() {
+            dropArea.classList.remove('border-green-500', 'bg-green-50');
+        }
+
+        dropArea.addEventListener('drop', function(e) {
+            const dt = e.dataTransfer;
+            handleFiles(dt.files);
+        });
+
+        function handleFiles(newFiles) {
+            const validFiles = Array.from(newFiles).filter(file => {
+                const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+                const isValidType = validTypes.includes(file.type);
+                const isValidSize = file.size <= 10 * 1024 * 1024; // 10MB
+
+                if (!isValidType) {
+                    alert(`File ${file.name} bukan gambar (hanya JPG, PNG, JPEG yang diperbolehkan)`);
+                    return false;
+                }
+
+                if (!isValidSize) {
+                    alert(`File ${file.name} terlalu besar (maksimal 10MB)`);
+                    return false;
+                }
+
+                return true;
+            });
+
+            files = files.concat(validFiles);
+            renderPreviews();
+        }
+
+        function renderPreviews() {
+            previewContainer.innerHTML = '';
+
+            if (files.length > 0) {
+                uploadPrompt.classList.add('hidden');
+
+                files.forEach((file, index) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const previewItem = document.createElement('div');
+                        previewItem.className = 'relative group';
+
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'w-24 h-24 object-cover rounded-lg border border-gray-200 shadow-sm';
+
+                        const removeBtn = document.createElement('button');
+                        removeBtn.type = 'button';
+                        removeBtn.className = 'absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-150';
+                        removeBtn.innerHTML = '&times;';
+                        removeBtn.addEventListener('click', () => removeFile(index));
+
+                        previewItem.appendChild(img);
+                        previewItem.appendChild(removeBtn);
+                        previewContainer.appendChild(previewItem);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            } else {
+                uploadPrompt.classList.remove('hidden');
+            }
+        }
+
+        function removeFile(index) {
+            files.splice(index, 1);
+            renderPreviews();
+        }
+    });
+
+    function confirmDeleteDocument(index) {
+        Swal.fire({
+            title: 'Hapus Dokumentasi?',
+            text: "Dokumentasi ini akan dihapus secara permanen!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Add hidden input to mark document for deletion
+                const container = document.createElement('div');
+                container.innerHTML = `
+                    <input type="hidden" name="deleted_docs[]" value="${index}">
+                `;
+                document.querySelector('form').appendChild(container);
+
+                // Remove the preview visually
+                document.querySelector(`[onclick="confirmDeleteDocument('${index}')"]`).closest('.relative').remove();
+
+                Swal.fire(
+                    'Dihapus!',
+                    'Dokumentasi telah ditandai untuk dihapus.',
+                    'success'
+                );
+            }
+        });
+    }
+</script>
 
 @endsection
