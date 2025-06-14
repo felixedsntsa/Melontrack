@@ -30,7 +30,7 @@
 
             <!-- Primary CTA -->
             <div class="animate-fadeInUp">
-                <a href="{{ url('/login') }}" class="inline-block px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                <a href="{{ url('/login') }}" class="inline-block px-8 py-3 bg-gradient-to-r from-green-600 to-green-700 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
                     Masuk ke Sistem
                 </a>
             </div>
