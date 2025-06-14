@@ -85,7 +85,7 @@
 
                 <div>
                     <label class="block font-semibold mb-1">Total panen</label>
-                    <input type="text" name="total_panen" placeholder="Contoh: 3.100 Kg"
+                    <input type="text" name="total_panen" placeholder="Contoh: 3100 Kg"
                         class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" required>
                 </div>
 
@@ -123,7 +123,7 @@
                 <div>
                     <label class="block text-sm font-medium mb-1">Total panen</label>
                     <input type="text" class="w-full border rounded px-3 py-2 bg-gray-100"
-                            x-bind:value="detailData.total_panen + ' Kg'" readonly>
+                            x-bind:value="detailData.total_panen" readonly>
                 </div>
                 <div>
                     <label class="block text-sm font-medium mb-1">Keterangan</label>

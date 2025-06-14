@@ -72,6 +72,9 @@ Route::middleware('auth:cabang')->group(function () {
     Route::get('/laporan/tambah', [C_Laporan::class, 'create'])->name('cabang.laporan.create');
     Route::post('/laporan/store', [C_Laporan::class, 'store'])->name('cabang.laporan.store');
     Route::get('/cabang/laporan/{id}', [C_Laporan::class, 'show'])->name('cabang.laporan.show');
+    Route::get('/laporan/{id}/edit', [C_Laporan::class, 'edit'])->name('cabang.laporan.edit');
+    Route::put('/laporan/{id}', [C_Laporan::class, 'update'])->name('cabang.laporan.update');
+    Route::delete('/laporan/{id}', [C_Laporan::class, 'destroy'])->name('cabang.laporan.destroy');
 });
 
 // LAPORAN ADMIN
