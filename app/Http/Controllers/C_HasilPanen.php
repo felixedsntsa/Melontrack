@@ -13,7 +13,7 @@ class C_HasilPanen extends Controller
             return redirect()->route('cabang.profil')->with('error', 'Akun Anda belum aktif. Silakan aktifkan terlebih dahulu di halaman profil.');
         }
 
-        $query = HasilPanen::with('cabang')->where('cabang_id', auth('cabang')->id());
+        $query = HasilPanen::with('cabang')->where('cabang_id', auth('cabang')->id())->latest();
 
         if ($request->has('search')) {
             $search = $request->search;
@@ -26,7 +26,7 @@ class C_HasilPanen extends Controller
             });
         }
 
-        $hasilPanens = $query->latest()->get();
+        $hasilPanens = $query->simplePaginate(10);
 
         return view('cabang.hasilpanen', compact('hasilPanens'));
     }

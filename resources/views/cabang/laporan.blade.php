@@ -81,8 +81,8 @@
                                         <span class="text-green-800 font-medium">{{ count($laporan->dokumentasi) }}+</span>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-sm text-gray-500 max-w-xs truncate" title="{{ $laporan->deskripsi }}">{{ $laporan->deskripsi }}</td>
-                                <td class="px-6 py-4 text-sm text-gray-500 max-w-xs truncate" title="{{ $laporan->feedback ?? '-' }}">{{ $laporan->feedback ?? '-' }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-500 max-w-xs truncate" title="{{ $laporan->deskripsi }}">{{ Str::limit($laporan->deskripsi, 15) }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-500 max-w-xs truncate" title="{{ $laporan->feedback ?? '-' }}">{{ Str::limit($laporan->feedback ?? '-', 5) }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
                                     <a href="{{ route('cabang.laporan.show', $laporan->id) }}"
                                         class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150">

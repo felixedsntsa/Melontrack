@@ -79,7 +79,7 @@
 
             <div class="p-6">
                 <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                    <div class="prose max-w-none text-gray-700">
+                    <div class="prose max-w-none text-gray-700 text-justify">
                         {!! nl2br(e($laporan->deskripsi)) !!}
                     </div>
                 </div>
