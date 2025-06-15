@@ -3,7 +3,7 @@
     <!-- Logo & Deskripsi -->
     <div class="space-y-4">
         <div class="flex items-center space-x-2">
-            <h3 class="font-bold text-3xl bg-clip-text text-transparent bg-white">LahanTani</h3>
+            <h3 class="font-bold text-3xl bg-clip-text text-transparent bg-white">Melontrack</h3>
         </div>
         <p class="text-green-100 leading-relaxed">Aplikasi manajemen pertanian modern berbasis web yang dirancang untuk optimalisasi pengelolaan, pemantauan, dan pelaporan budidaya melon secara real-time.</p>
     </div>

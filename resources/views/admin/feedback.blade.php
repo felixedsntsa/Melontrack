@@ -109,6 +109,8 @@
     </div>
 </div>
 
+@include('master.footer')
+
 {{-- Image Modal --}}
 <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden items-center justify-center p-4">
     <div class="relative max-w-4xl max-h-screen">

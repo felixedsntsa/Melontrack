@@ -49,11 +49,26 @@
                             <td class="py-2 px-4">{{ $panen->periode_panen }}</td>
                             <td class="py-2 px-4">{{ number_format($panen->total_panen, 0, ',', '.') }} Kg</td>
                             <td class="py-2 px-4 truncate max-w-[200px]">{{ Str::limit($panen->keterangan, 25, '...') }}</td>
-                            <td class="py-2 px-4">
+                            <td class="py-2 px-4 space-x-1">
                                 <button @click="showDetail = true; detailData = {{ $panen->toJson() }}"
                                         class="bg-green-600 text-white px-3 py-1 rounded-lg hover:bg-green-700 text-sm">
                                     Selengkapnya
                                 </button>
+
+                                <a href="{{ route('cabang.hasilpanen.edit', $panen->id) }}"
+                                class="bg-yellow-400 text-white px-3 py-1 rounded-lg hover:bg-yellow-500 text-sm">
+                                    Edit
+                                </a>
+
+                                <form action="{{ route('cabang.hasilpanen.destroy', $panen->id) }}" method="POST" class="inline-block"
+                                    onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                            class="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 text-sm">
+                                        Hapus
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @empty
