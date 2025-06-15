@@ -93,6 +93,9 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth:cabang')->group(function () {
     Route::get('/hasilpanen', [C_HasilPanen::class, 'index'])->name('cabang.hasilpanen');
     Route::post('/hasilpanen', [C_HasilPanen::class, 'store'])->name('cabang.hasilpanen.store');
+    Route::get('/hasilpanen/{id}/edit', [C_HasilPanen::class, 'edit'])->name('cabang.hasilpanen.edit');
+    Route::put('/hasilpanen/{id}', [C_HasilPanen::class, 'update'])->name('cabang.hasilpanen.update');
+    Route::delete('/hasilpanen/{id}', [C_HasilPanen::class, 'destroy'])->name('cabang.hasilpanen.destroy');
 });
 
 // HASIL PANEN ADMIN

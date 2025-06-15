@@ -49,4 +49,31 @@ class C_HasilPanen extends Controller
         return redirect()->back()->with('success', 'Laporan hasil panen berhasil ditambahkan.');
     }
 
+    public function edit($id)
+    {
+        $panen = HasilPanen::where('cabang_id', auth()->user()->id)->findOrFail($id);
+        return view('cabang.edithasilpanen', compact('panen'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'periode_panen' => 'required|string',
+            'total_panen' => 'required|integer',
+            'keterangan' => 'nullable|string',
+        ]);
+
+        $panen = HasilPanen::where('cabang_id', auth()->user()->id)->findOrFail($id);
+        $panen->update($request->only(['periode_panen', 'total_panen', 'keterangan']));
+
+        return redirect()->route('cabang.hasilpanen')->with('success', 'Data berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        $panen = HasilPanen::where('cabang_id', auth()->user()->id)->findOrFail($id);
+        $panen->delete();
+
+        return redirect()->route('cabang.hasilpanen')->with('success', 'Data berhasil dihapus.');
+    }
 }
