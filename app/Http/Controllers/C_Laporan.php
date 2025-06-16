@@ -77,7 +77,19 @@ class C_Laporan extends Controller
             'dokumentasi.*' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
 
-        $paths = [];
+        // Ambil dokumentasi lama
+        $existingDocs = $laporan->dokumentasi ?? [];
+
+        // Proses penghapusan dokumentasi yang ditandai
+        if ($request->has('deleted_docs')) {
+            foreach ($request->deleted_docs as $index) {
+                if (isset($existingDocs[$index])) {
+                    Storage::disk('public')->delete($existingDocs[$index]); // Hapus dari storage
+                    unset($existingDocs[$index]); // Hapus dari array
+                }
+            }
+            $existingDocs = array_values($existingDocs); // Reindex array
+        }
 
         // Hapus dokumentasi lama jika ada upload baru
         if ($request->hasFile('dokumentasi') && !empty($laporan->dokumentasi)) {
@@ -87,15 +99,17 @@ class C_Laporan extends Controller
         }
 
         // Upload dokumentasi baru
+        $paths = [];
         if ($request->hasFile('dokumentasi')) {
             foreach ($request->file('dokumentasi') as $file) {
                 $paths[] = $file->store('laporan-foto', 'public');
             }
-        } else {
-            $paths = $laporan->dokumentasi ?? [];
         }
 
-        $laporan->dokumentasi = array_merge($laporan->dokumentasi ?? [], $paths);
+        // Kalau ada file baru, ganti dokumentasi lama
+        if (!empty($paths)) {
+            $laporan->dokumentasi = $paths;
+        }
 
         $laporan->update([
             'deskripsi' => $request->deskripsi,

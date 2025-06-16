@@ -21,6 +21,11 @@ class C_AdminHasilPanen extends Controller
 
         $hasilPanens = $query->simplePaginate(10);
 
-        return view('admin.hasilpanen', compact('hasilPanens'));
+        $rekapPerCabang = HasilPanen::selectRaw('cabang_id, SUM(total_panen) as total_kg, COUNT(*) as total_periode, MAX(created_at) as last_update')
+            ->groupBy('cabang_id')
+            ->with('cabang')
+            ->get();
+
+        return view('admin.hasilpanen', compact('hasilPanens', 'rekapPerCabang'));
     }
 }

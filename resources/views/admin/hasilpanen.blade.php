@@ -33,6 +33,42 @@
                 </form>
             </div>
 
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                @foreach($rekapPerCabang as $rekap)
+                <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden">
+                    <div class="p-5">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-green-50 text-green-600 mr-4">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800">{{ $rekap->cabang->nama }}</h3>
+                                <div class="flex items-center mt-1">
+                                    <span class="text-xs text-gray-500 mr-2">Terakhir update:</span>
+                                    <span class="text-xs font-medium text-gray-600">
+                                        {{ \Carbon\Carbon::parse($rekap->last_update)->diffForHumans() }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mt-4">
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="text-sm text-gray-500">Total Panen</p>
+                                <p class="text-xl font-bold text-green-600">{{ number_format($rekap->total_kg, 0, ',', '.') }} kg</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="text-sm text-gray-500">Jumlah Periode</p>
+                                <p class="text-xl font-bold text-blue-600">{{ $rekap->total_periode }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+
             <!-- Main Card -->
             <div class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100">
                 <!-- Table Section -->
